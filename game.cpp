@@ -43,7 +43,7 @@ SDL_Renderer* create_render(SDL_Window* window){
     return renderer;
 }
 
-//load inmage
+//load image
 SDL_Texture *load_texture(const char *filename, SDL_Renderer *renderer){
         SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION,SDL_LOG_PRIORITY_INFO,"Loading %s",filename);
         SDL_Texture *texture = IMG_LoadTexture(renderer,filename);
@@ -64,7 +64,7 @@ void key_event_to_quit(){
     SDL_Event e;
     while (true){
         if (SDL_PollEvent(&e) && (e.type == SDL_KEYDOWN || e.type == SDL_QUIT)) return;
-        SDL_Delay(1000);
+        SDL_Delay(100);
     }
 }
 
@@ -91,6 +91,9 @@ int main(int argc, char* argv[]){
     draw(renderer);
 
     SDL_RenderPresent(renderer);
+
+    SDL_DestroyTexture(texture);
+    texture = NULL;
 
     key_event_to_quit();
     quit(renderer,window);
