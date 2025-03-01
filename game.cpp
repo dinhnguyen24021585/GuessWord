@@ -1,5 +1,6 @@
 #include<iostream>
 #include<SDL.h>
+#include<SDL_image.h>
 
 using namespace std;
 
@@ -25,6 +26,9 @@ SDL_Window* initSDL(int height, int width, const char* window_title){
     //check window error
     if (window == nullptr) error_message("Can't open window - Error:",SDL_GetError());
 
+    //check image error
+    if(!IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG)) error_message("Image error: ",SDL_GetError());
+
     return window;
 }
 
@@ -39,10 +43,20 @@ SDL_Renderer* create_render(SDL_Window* window){
     return renderer;
 }
 
+//load inmage
+SDL_Texture *load_texture(const char *filename, SDL_Renderer *renderer){
+        SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION,SDL_LOG_PRIORITY_INFO,"Loading %s",filename);
+        SDL_Texture *texture = IMG_LoadTexture(renderer,filename);
+        if(texture == NULL)
+                SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION,SDL_LOG_PRIORITY_INFO,"Load image failed %s",IMG_GetError());
+        return texture;
+}
+
 void quit(SDL_Renderer* renderer,SDL_Window* window){
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    IMG_Quit();
 }
 
 //check key event to quit window
@@ -67,12 +81,19 @@ void draw(SDL_Renderer* renderer){
     SDL_RenderDrawRect(renderer,&rect);
 }
 
-int main(int argv, char* argc[]){
+int main(int argc, char* argv[]){
     SDL_Window* window = initSDL(window_height,window_width,title);
     SDL_Renderer* renderer = create_render(window);
 
+    SDL_Texture* texture = load_texture("test.jpg",renderer);
+    SDL_RenderCopy(renderer,texture,NULL,NULL);
+
     draw(renderer);
+
+    SDL_RenderPresent(renderer);
 
     key_event_to_quit();
     quit(renderer,window);
+
+    return 0;
 }
