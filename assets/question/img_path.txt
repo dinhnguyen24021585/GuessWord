@@ -1,0 +1,6 @@
+assets/question/image/pic1.png
+assets/question/image/pic2.png
+assets/question/image/pic3.png
+assets/question/image/pic4.png
+assets/question/image/pic5.png
+assets/question/image/pic6.png
