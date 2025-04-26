@@ -29,3 +29,5 @@
 + Nhiều thuật toán ngây ngô, chắp vá nhiều, đơn giản (check cụm từ có giống với đáp án hay không)
 + Thoát game phải chơi lại từ đầu (chưa có tính năng save game do có ít level (6))
 + Chưa hỗ trợ viết Tiếng Việt
+
+5: Link Gameplay: https://youtu.be/ggcstr4a4qY

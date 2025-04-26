@@ -46,11 +46,11 @@ int main(int argc, char* argv[]){
 
     srand(time(0));
     int lucky_num = rand() % 10 + 1;
-
+    
     Mix_Chunk* ans_true = graphics.load_sound("assets/sound/true.wav");
     Mix_Chunk* ans_false = graphics.load_sound("assets/sound/false.wav");
 
-    while(!quit){
+    while(!quit){cout<<lucky_num;
         if (playing && !new_lvl ){
             if (game.cur_lvl <= maxlvl){
                 SDL_Texture* sun = graphics.load_texture("assets/bgr/sun.png");
@@ -114,7 +114,6 @@ int main(int argc, char* argv[]){
                             new_lvl = true;
                             graphics.set_pos_to_show_image(graphics.next_button,595,540);
                             text_input = "";
-                            
                         }
                         else {
                             graphics.print_text("Đáp án sai",255,0,0,0,400-(29*8 + 4*2)/4,453,25);
@@ -125,12 +124,13 @@ int main(int argc, char* argv[]){
                             render_gameplay(game,new_lvl);
                             text_box();
                             text_input = "";  
+                            space_cnt = 0;
                             
                         }
                     }
                 }
                 if (e.key.keysym.scancode != SDL_SCANCODE_BACKSPACE){
-                    if ((isalpha(*e.text.text) || isdigit(*e.text.text) || *e.text.text == ' ') && text_input.size() <= game.lvl_ans[game.cur_lvl-1].size()){
+                    if ((isalpha(*e.text.text) || isdigit(*e.text.text) || *e.text.text == ' ') && text_input.size() < game.lvl_ans[game.cur_lvl-1].size()){
                         if (*e.text.text == ' ') space_cnt++;
                         text_input += e.text.text;
                     }

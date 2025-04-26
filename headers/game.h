@@ -36,7 +36,8 @@ void end_screen(){
     graphics.print_text("Chọn 1 trong 10 túi và chỉ được xé 1 lần thui nha:3",0,0,0,0,100,75,25);
     SDL_SetRenderDrawColor(graphics.renderer,0,0,0,0);
     for(int i=0;i<10;i++){
-        graphics.draw_rectangle(300,120+45*i,35,200);
+        SDL_Rect box = {300,120+45*i,200,35};
+        SDL_RenderDrawRect(graphics.renderer,&box);
         string num = to_string(i+1);
         graphics.print_text(num.c_str(),0,0,0,0,395,125+45*i,25);
     }
@@ -74,13 +75,8 @@ void text_box(){
 //bgr
 void render_background(const GuessWord& game){
     SDL_SetRenderDrawColor(graphics.renderer,135,206,235,0);
-    SDL_Rect rect;
-    rect.x = 0;
-    rect.y = 0;
-    rect.h = window_height;
-    rect.w = window_width;
+    SDL_Rect rect = {0,0,window_height,window_width};
     SDL_RenderFillRect(graphics.renderer,&rect);
-
 }
 
 void scroll_bgr(const GuessWord& game,vector<Scrolling_bgr>&v_bgr, int* _y_pos){
@@ -99,13 +95,12 @@ void render_homepage(const GuessWord& game){
     graphics.set_pos_to_show_image(logo,280,0);
 
     SDL_SetRenderDrawColor(graphics.renderer,0,0,0,0);
-    SDL_Rect play_button;
-    play_button.x = 300;
-    play_button.y = 250;
-    play_button.h = 75;
-    play_button.w = 200;
+    SDL_Rect play_button = {300,250,200,75};
     SDL_RenderDrawRect(graphics.renderer,&play_button);
     graphics.print_text("Play",0,0,0,0,350,260,50);
+
+    graphics.print_text("Lưu ý: Do game chưa hỗ trợ viết Tiếng Việt, nên khi nhập đáp án,",0,0,0,0,20,530,25);
+    graphics.print_text("chỉnh trình hỗ trợ gõ Tiếng Việt về tiếng Anh nha:'>",0,0,0,0,100,555,25);
 
     SDL_DestroyTexture(logo);
 }
@@ -130,8 +125,10 @@ void render_gameplay(const GuessWord& game,bool &new_lvl){
         graphics.set_pos_to_show_image(img,100,100);
 
         SDL_SetRenderDrawColor(graphics.renderer,0,0,0,0);
-        graphics.draw_rectangle(310,-1,50,150);
-        graphics.draw_rectangle(100,100,300,600);
+        SDL_Rect lvl = {310,-1,150,50};
+        SDL_RenderDrawRect(graphics.renderer,&lvl);     
+        SDL_Rect quest_img = {100,100,600,300};
+        SDL_RenderDrawRect(graphics.renderer,&quest_img);
         SDL_RenderDrawLine(graphics.renderer,200,450,600,450);
 
         SDL_DestroyTexture(img);

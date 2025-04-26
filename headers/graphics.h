@@ -110,11 +110,6 @@ struct Graphics{
             SDL_Texture* _text = show_text(font,text,color);
             set_pos_to_show_image(_text,_x,_y);
         }
-
-        void draw_rectangle(int _x,int _y,int _h,int _w){
-            SDL_Rect rect = {_x,_y,_w,_h};
-            SDL_RenderDrawRect(renderer,&rect);
-        }
         
         //load image
         SDL_Texture *load_texture(const char *filename){
